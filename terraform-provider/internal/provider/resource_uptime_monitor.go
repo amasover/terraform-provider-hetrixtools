@@ -226,6 +226,7 @@ func (r *uptimeMonitorResource) Create(ctx context.Context, req resource.CreateR
 		}
 		action, err := r.client.CreateUptimeMonitor(ctx, uptimeHTTPMonitorRequestFromModel(ctx, plan, &resp.Diagnostics))
 		if finishUptimeMutation(resp.Diagnostics.AddError, action, err, &plan.uptimeCommonModel, nil) {
+			nullUnknowns(&plan)
 			resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 		}
 	case uptimeMonitorPing:
@@ -236,6 +237,7 @@ func (r *uptimeMonitorResource) Create(ctx context.Context, req resource.CreateR
 		}
 		action, err := r.client.CreateUptimeMonitor(ctx, uptimePingMonitorRequestFromModel(ctx, plan, &resp.Diagnostics))
 		if finishUptimeMutation(resp.Diagnostics.AddError, action, err, &plan.uptimeCommonModel, nil) {
+			nullUnknowns(&plan)
 			resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 		}
 	case uptimeMonitorSMTP:
@@ -246,6 +248,7 @@ func (r *uptimeMonitorResource) Create(ctx context.Context, req resource.CreateR
 		}
 		action, err := r.client.CreateUptimeMonitor(ctx, uptimeSMTPMonitorRequestFromModel(ctx, plan, &resp.Diagnostics))
 		if finishUptimeMutation(resp.Diagnostics.AddError, action, err, &plan.uptimeCommonModel, nil) {
+			nullUnknowns(&plan)
 			resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 		}
 	case uptimeMonitorHeartbeat:
@@ -256,6 +259,7 @@ func (r *uptimeMonitorResource) Create(ctx context.Context, req resource.CreateR
 		}
 		action, err := r.client.CreateUptimeMonitor(ctx, uptimeHeartbeatMonitorRequestFromModel(plan))
 		if finishUptimeMutation(resp.Diagnostics.AddError, action, err, &plan.uptimeCommonModel, &plan.ServerID) {
+			nullUnknowns(&plan)
 			resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 		}
 	}
@@ -341,6 +345,7 @@ func (r *uptimeMonitorResource) Update(ctx context.Context, req resource.UpdateR
 		}
 		action, err := r.client.UpdateUptimeMonitor(ctx, uptimeHTTPMonitorRequestFromModel(ctx, plan, &resp.Diagnostics))
 		if finishUptimeMutation(resp.Diagnostics.AddError, action, err, &plan.uptimeCommonModel, nil) {
+			nullUnknowns(&plan)
 			resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 		}
 	case uptimeMonitorPing:
@@ -351,6 +356,7 @@ func (r *uptimeMonitorResource) Update(ctx context.Context, req resource.UpdateR
 		}
 		action, err := r.client.UpdateUptimeMonitor(ctx, uptimePingMonitorRequestFromModel(ctx, plan, &resp.Diagnostics))
 		if finishUptimeMutation(resp.Diagnostics.AddError, action, err, &plan.uptimeCommonModel, nil) {
+			nullUnknowns(&plan)
 			resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 		}
 	case uptimeMonitorSMTP:
@@ -361,6 +367,7 @@ func (r *uptimeMonitorResource) Update(ctx context.Context, req resource.UpdateR
 		}
 		action, err := r.client.UpdateUptimeMonitor(ctx, uptimeSMTPMonitorRequestFromModel(ctx, plan, &resp.Diagnostics))
 		if finishUptimeMutation(resp.Diagnostics.AddError, action, err, &plan.uptimeCommonModel, nil) {
+			nullUnknowns(&plan)
 			resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 		}
 	case uptimeMonitorHeartbeat:
@@ -371,6 +378,7 @@ func (r *uptimeMonitorResource) Update(ctx context.Context, req resource.UpdateR
 		}
 		action, err := r.client.UpdateUptimeMonitor(ctx, uptimeHeartbeatMonitorRequestFromModel(plan))
 		if finishUptimeMutation(resp.Diagnostics.AddError, action, err, &plan.uptimeCommonModel, &plan.ServerID) {
+			nullUnknowns(&plan)
 			resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 		}
 	}
