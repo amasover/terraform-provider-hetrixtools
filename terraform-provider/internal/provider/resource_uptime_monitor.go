@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
@@ -393,12 +394,14 @@ func finishUptimeMutation(addError func(string, string), action *hetrixtools.Act
 }
 
 func (r *uptimeMonitorResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state uptimeCommonModel
-	resp.Diagnostics.Append(req.State.Get(ctx, &state)...)
+	// Only the id: the state holds the monitor type's own attributes, which
+	// uptimeCommonModel does not have, so reading the whole state into it fails.
+	var id types.String
+	resp.Diagnostics.Append(req.State.GetAttribute(ctx, path.Root("id"), &id)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	err := r.client.DeleteUptimeMonitor(ctx, state.ID.ValueString())
+	err := r.client.DeleteUptimeMonitor(ctx, id.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Delete uptime monitor failed", err.Error())
 	}
